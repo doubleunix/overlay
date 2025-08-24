@@ -20,7 +20,10 @@
     };
 
     default = with pkgs; buildEnv {
+
       name = "overlay";
+      ignoreCollisions = true;
+
       paths = [
 
         (python314.withPackages (ps: with ps; [
