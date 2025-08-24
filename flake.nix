@@ -38,28 +38,27 @@
       paths = builtins.attrValues pythons;
     };
 
-    attrset     = import ./src {} pkgs;
-    derivations = lib.filterAttrs (k: v: lib.isDerivation v) attrset;
-    packages    = derivations // pythons // { inherit default; overlay = default; };
+    overlayNames = builtins.attrNames (import ./src {} pkgs);
+    attrset      = pkgs.__splicedPackages;
+    derivations  = lib.filterAttrs (k: v: lib.elem k overlayNames && lib.isDerivation v) attrset;
+    packages     = derivations // pythons // { inherit default; overlay = default; };
 
   in
-
   {
-
     packages.${system} = packages;
 
     checks.${system} = {
-
       py315 = pkgs.runCommand "py315" { } ''
-          set -euo pipefail
-          ${packages.py315}/bin/python - << 'EOF'
-          import sklearn
-          import lightgbm
-          EOF
-          touch $out
-        '';
+        set -euo pipefail
+        ${packages.py315}/bin/python - << 'EOF'
+        import sklearn
+        import lightgbm
+        EOF
+        touch $out
+      '';
     };
 
     overlays.default = overlay;
   };
 }
+
