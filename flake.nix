@@ -22,7 +22,7 @@
     common   = (ps: with ps; [ ipython numpy is-instance python-bin ]);
     standard = (ps: with ps; [ pandas scikit-learn lightgbm lambda-multiprocessing ]);
 
-    pythons = {
+    pythons = with pkgs; {
       py314  = python314.withPackages (ps: with ps; common ++ standard);
       py315  = python315.withPackages (ps: with ps; common ++ standard);
       py313t = python313FreeThreading.withPackages (ps: with ps; common);
