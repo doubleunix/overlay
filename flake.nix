@@ -19,6 +19,8 @@
       config.allowUnfree = true;
     };
 
+    lib = pkgs.lib;
+
     common   = (ps: with ps; [ ipython numpy is-instance python-bin ]);
     standard = (ps: with ps; [ pandas scikit-learn lightgbm lambda-multiprocessing ]);
 
@@ -36,13 +38,14 @@
       paths = builtins.attrValues pythons;
     };
 
-    packages = (import ./src {} pkgs) // pythons // { inherit default; };
+    attrset  = import ./src {} pkgs;
+    packages = lib.filterAttrs (k: v: lib.isDerivation v) attrset;
 
   in
 
   {
 
-    packages.${system} = packages;
+    packages.${system} = packages // pythons // { inherit default; overlay = default; };
 
     checks.${system} = {
 
