@@ -43,9 +43,9 @@
     derivations  = lib.filterAttrs (k: v: lib.elem k overlayNames && lib.isDerivation v) attrset;
     packages     = derivations // pythons // { inherit default; overlay = default; };
 
-    check-python = pyenv: ''
+    check-python-standard = pyenv: ''
       set -euo pipefail
-      ${pyenv}/bin/python<< 'EOF' | tee $out
+      ${pyenv}/bin/python << 'EOF' | tee $out
       import sys
       import numpy
       import pandas
@@ -59,12 +59,31 @@
       EOF
     '';
 
+    check-python-freethreading = pyenv: ''
+      set -euo pipefail
+      ${pyenv}/bin/python << 'EOF' | tee $out
+      import sys
+      import bin
+      import numpy
+      import is-instance
+      print(f"python version is: {sys.version}")
+      print(f"numpy version is: {numpy.__version__}")
+      print(f"is-instance version is: {is-instance.__version__}")
+      print(f"bin version is: {bin.__version__}")
+      bin.cowsay("Oh no!")
+      EOF
+    '';
+
   in
   {
     packages.${system} = packages;
 
-    checks.${system} = {
-      py315 = pkgs.runCommand "py315" { } (check-python packages.py315);
+    checks.${system} = with pythons; {
+      py314  = pkgs.runCommand "py314" { } (check-python-standard py314);
+      py315  = pkgs.runCommand "py315" { } (check-python-standard py315);
+      py313t = pkgs.runCommand "py313t" { } (check-python-freethreading py313t);
+      py314t = pkgs.runCommand "py314t" { } (check-python-freethreading py314t);
+      py315t = pkgs.runCommand "py315t" { } (check-python-freethreading py315t);
     };
 
     overlays.default = overlay;
