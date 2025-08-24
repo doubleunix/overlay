@@ -19,6 +19,8 @@
       config.allowUnfree = true;
     };
 
+    lib = pkgs.lib;
+
     common   = (ps: with ps; [ ipython numpy is-instance python-bin ]);
     standard = (ps: with ps; [ pandas scikit-learn lightgbm lambda-multiprocessing ]);
 
