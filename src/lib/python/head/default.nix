@@ -163,7 +163,7 @@ let
   python315-base = prev.callPackage
     (prev.path + "/pkgs/development/interpreters/python/cpython")
     {
-      self = prev.python314; #final.python315;
+      self = final.python315;
       sourceVersion = { major = "3"; minor = "15"; patch = "0"; suffix = "a0"; };
       hash = "sha256-lNrDERJPfoo/a5629/fS0RbBYdh3CtXrbA0rFKw+eAQ=";
       inherit passthruFun;
