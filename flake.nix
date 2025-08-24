@@ -51,8 +51,16 @@
       py315 = pkgs.runCommand "py315" { } ''
         set -euo pipefail
         ${packages.py315}/bin/python - << 'EOF'
+        import sys
+        import numpy
+        import pandas
         import sklearn
         import lightgbm
+        print(f"python version is: {sys.version}")
+        print(f"numpy version is: {numpy.__version__}")
+        print(f"pandas version is: {pandas.__version__}")
+        print(f"sklearn version is: {sklearn.__version__}")
+        print(f"lightgbm version is: {lightgbm.__version__}")
         EOF
         touch $out
       '';
