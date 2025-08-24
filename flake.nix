@@ -28,7 +28,7 @@
       py313t = python313FreeThreading.withPackages (ps: with ps; common);
       py314t = python314FreeThreading.withPackages (ps: with ps; common);
       py315t = python315FreeThreading.withPackages (ps: with ps; common);
-    }
+    };
 
     default = with pkgs; buildEnv {
       name = "overlay";
