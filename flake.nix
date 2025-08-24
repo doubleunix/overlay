@@ -26,10 +26,10 @@
 
     pythons = with pkgs; {
       py314  = python314.withPackages (ps: with ps; common ++ standard);
-      py315  = python315.withPackages (ps: with ps; common ++ standard);
+      #py315  = python315.withPackages (ps: with ps; common ++ standard);
       py313t = python313FreeThreading.withPackages (ps: with ps; common);
       py314t = python314FreeThreading.withPackages (ps: with ps; common);
-      py315t = python315FreeThreading.withPackages (ps: with ps; common);
+      #py315t = python315FreeThreading.withPackages (ps: with ps; common);
     };
 
     default = with pkgs; buildEnv {
@@ -45,7 +45,7 @@
 
   {
 
-    packages.${system} = packages // pythons // { inherit default; overlay = default; };
+    packages.${system} = packages // { inherit default; overlay = default; };
 
     checks.${system} = {
 
