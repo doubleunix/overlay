@@ -23,11 +23,11 @@
     standard = (ps: with ps; [ pandas scikit-learn lightgbm lambda-multiprocessing ]);
 
     pythons = with pkgs; {
-      py314  = python314.withPackages (ps: with ps; common ++ standard);
-      py315  = python315.withPackages (ps: with ps; common ++ standard);
-      py313t = python313FreeThreading.withPackages (ps: with ps; common);
-      py314t = python314FreeThreading.withPackages (ps: with ps; common);
-      py315t = python315FreeThreading.withPackages (ps: with ps; common);
+      py314  = python314.withPackages (ps: common ps ++ standard ps);
+      py315  = python315.withPackages (ps: common ps ++ standard ps);
+      py313t = python313FreeThreading.withPackages (ps: common ps);
+      py314t = python314FreeThreading.withPackages (ps: common ps);
+      py315t = python315FreeThreading.withPackages (ps: common ps);
     };
 
     default = with pkgs; buildEnv {
