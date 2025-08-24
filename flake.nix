@@ -45,7 +45,7 @@
 
     check-python = pyenv: ''
       set -euo pipefail
-      ${pyenv}/bin/python - << 'EOF' | tee $out
+      ${pyenv}/bin/python << 'EOF' | tee $out
       import sys
       import numpy
       import pandas
@@ -57,6 +57,7 @@
       print(f"sklearn version is: {sklearn.__version__}")
       print(f"lightgbm version is: {lightgbm.__version__}")
       EOF
+      touch $out
     '';
 
   in
@@ -64,7 +65,7 @@
     packages.${system} = packages;
 
     checks.${system} = {
-      py315 = pkgs.runCommand "py315" { } (check-python pythons.py315);
+      py315 = pkgs.runCommand "py315" { } (check-python packages.py315);
     };
 
     overlays.default = overlay;
