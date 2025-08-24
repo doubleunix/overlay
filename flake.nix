@@ -7,9 +7,25 @@
 
   outputs = { self, nixpkgs }:
 
+  let
+
+    system = "x86_64-linux";
+
+    overlay = (import ./src);
+
+    pkgs = import nixpkgs {
+      inherit system;
+      overlays = [ overlay ];
+      config.allowUnfree = true;
+    };
+
+  in
+
   {
 
-    overlays.default = (import ./src);
+    packages.${system} = (import ./src {} pkgs);
+
+    overlays.default = overlay;
 
   };
 }
