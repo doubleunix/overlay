@@ -38,14 +38,15 @@
       paths = builtins.attrValues pythons;
     };
 
-    attrset  = import ./src {} pkgs;
-    packages = lib.filterAttrs (k: v: lib.isDerivation v) attrset;
+    attrset     = import ./src {} pkgs;
+    derivations = lib.filterAttrs (k: v: lib.isDerivation v) attrset;
+    packages    = derivations // pythons // { inherit default; overlay = default; };
 
   in
 
   {
 
-    packages.${system} = packages // pythons // { inherit default; overlay = default; };
+    packages.${system} = packages;
 
     checks.${system} = {
 
