@@ -21,8 +21,21 @@
 
     lib = pkgs.lib;
 
-    common   = (ps: with ps; [ ipython numpy is-instance python-bin editdistance ]);
-    standard = (ps: with ps; [ pandas scikit-learn lightgbm lambda-multiprocessing python-bin ]);
+    common   = (ps: with ps; [
+      ipython
+      numpy
+      requests
+      is-instance
+      python-bin
+      editdistance
+    ]);
+
+    standard = (ps: with ps; [
+      pandas
+      scikit-learn
+      lightgbm
+      lambda-multiprocessing
+    ]);
 
     pythons = with pkgs; {
       py313  = python313.withPackages (ps: common ps ++ standard ps);
