@@ -21,17 +21,17 @@
 
     lib = pkgs.lib;
 
-    common   = (ps: with ps; [
+    common = (ps: with ps; [
       ipython
       numpy
       requests
-      yt-dlp
       is-instance
       python-bin
       editdistance
     ]);
 
     standard = (ps: with ps; [
+      yt-dlp
       pandas
       scikit-learn
       lightgbm
