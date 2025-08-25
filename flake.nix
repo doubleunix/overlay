@@ -25,6 +25,7 @@
       ipython
       numpy
       requests
+      yt-dlp
       is-instance
       python-bin
       editdistance
