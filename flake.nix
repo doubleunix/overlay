@@ -21,7 +21,7 @@
 
     lib = pkgs.lib;
 
-    common = (ps: with ps; [
+    all = (ps: with ps; [
       ipython
       numpy
       requests
@@ -30,7 +30,7 @@
       editdistance
     ]);
 
-    standard = (ps: with ps; [
+    std = (ps: with ps; [
       yt-dlp
       pandas
       scikit-learn
@@ -39,12 +39,12 @@
     ]);
 
     pythons = with pkgs; {
-      py313  = python313.withPackages (ps: common ps ++ standard ps);
-      py314  = python314.withPackages (ps: common ps ++ standard ps);
-      py315  = python315.withPackages (ps: common ps ++ standard ps);
-      py313t = python313FreeThreading.withPackages (ps: common ps);
-      py314t = python314FreeThreading.withPackages (ps: common ps);
-      py315t = python315FreeThreading.withPackages (ps: common ps);
+      py313  = python313.withPackages (ps: all ps ++ std ps);
+      py314  = python314.withPackages (ps: all ps ++ std ps);
+      py315  = python315.withPackages (ps: all ps ++ std ps);
+      py313t = python313FreeThreading.withPackages (ps: all ps);
+      py314t = python314FreeThreading.withPackages (ps: all ps);
+      py315t = python315FreeThreading.withPackages (ps: all ps);
     };
 
     default = with pkgs; buildEnv {
@@ -58,7 +58,7 @@
     derivations  = lib.filterAttrs (k: v: lib.elem k overlayNames && lib.isDerivation v) attrset;
     packages     = derivations // pythons // { inherit default; overlay = default; };
 
-    check-python-standard = pyenv: ''
+    check-python-std = pyenv: ''
       set -euo pipefail
       export PATH=$PATH:${pkgs.cowsay}/bin
       ${pyenv}/bin/python << 'EOF' | tee $out
@@ -77,7 +77,7 @@
       EOF
     '';
 
-    check-python-common = pyenv: ''
+    check-python-all = pyenv: ''
       set -euo pipefail
       export PATH=$PATH:${pkgs.cowsay}/bin
       ${pyenv}/bin/python << 'EOF' | tee $out
@@ -96,16 +96,16 @@
     packages.${system} = packages;
 
     checks.${system} = with pythons; {
-      py313'  = pkgs.runCommand "py313"  { } (check-python-standard py313);
-      py314'  = pkgs.runCommand "py314"  { } (check-python-standard py314);
-      py315'  = pkgs.runCommand "py315"  { } (check-python-standard py315);
+      py313'  = pkgs.runCommand "py313"  { } (check-python-std py313);
+      py314'  = pkgs.runCommand "py314"  { } (check-python-std py314);
+      py315'  = pkgs.runCommand "py315"  { } (check-python-std py315);
 
-      py313  = pkgs.runCommand "py313"  { } (check-python-common py313);
-      py314  = pkgs.runCommand "py314"  { } (check-python-common py314);
-      py315  = pkgs.runCommand "py315"  { } (check-python-common py315);
-      py313t = pkgs.runCommand "py313t" { } (check-python-common py313t);
-      py314t = pkgs.runCommand "py314t" { } (check-python-common py314t);
-      py315t = pkgs.runCommand "py315t" { } (check-python-common py315t);
+      py313  = pkgs.runCommand "py313"  { } (check-python-all py313);
+      py314  = pkgs.runCommand "py314"  { } (check-python-all py314);
+      py315  = pkgs.runCommand "py315"  { } (check-python-all py315);
+      py313t = pkgs.runCommand "py313t" { } (check-python-all py313t);
+      py314t = pkgs.runCommand "py314t" { } (check-python-all py314t);
+      py315t = pkgs.runCommand "py315t" { } (check-python-all py315t);
     };
 
     overlays.default = overlay;
