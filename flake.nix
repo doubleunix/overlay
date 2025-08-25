@@ -73,7 +73,7 @@
     ]);
 
     pythons = with pkgs; {
-      py313  = python313.withPackages (ps: all ps ++ std ps ++ [torch embd wnix geoip2 google-auth-oauthlib google-api-python-client]);
+      py313  = python313.withPackages (ps: all ps ++ std ps ++ with ps; [torch embd wnix geoip2 google-auth-oauthlib google-api-python-client]);
       py314  = python314.withPackages (ps: all ps ++ std ps);
       py315  = python315.withPackages (ps: all ps ++ std ps);
       py313t = python313FreeThreading.withPackages (ps: all ps);
