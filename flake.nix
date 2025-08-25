@@ -22,9 +22,10 @@
     lib = pkgs.lib;
 
     common   = (ps: with ps; [ ipython numpy is-instance python-bin ]);
-    standard = (ps: with ps; [ pandas scikit-learn lightgbm lambda-multiprocessing ]);
+    standard = (ps: with ps; [ pandas scikit-learn lightgbm lambda-multiprocessing python-bin ]);
 
     pythons = with pkgs; {
+      py313  = python313.withPackages (ps: common ps ++ standard ps);
       py314  = python314.withPackages (ps: common ps ++ standard ps);
       py315  = python315.withPackages (ps: common ps ++ standard ps);
       py313t = python313FreeThreading.withPackages (ps: common ps);
@@ -45,8 +46,10 @@
 
     check-python-standard = pyenv: ''
       set -euo pipefail
+      export PATH=$PATH:${pkgs.cowsay}/bin
       ${pyenv}/bin/python << 'EOF' | tee $out
       import sys
+      import bin
       import numpy
       import pandas
       import sklearn
@@ -56,21 +59,21 @@
       print(f"pandas version is: {pandas.__version__}")
       print(f"sklearn version is: {sklearn.__version__}")
       print(f"lightgbm version is: {lightgbm.__version__}")
+      print(bin.cowsay("Its working!"))
       EOF
     '';
 
-    check-python-freethreading = pyenv: ''
+    check-python-common = pyenv: ''
       set -euo pipefail
+      export PATH=$PATH:${pkgs.cowsay}/bin
       ${pyenv}/bin/python << 'EOF' | tee $out
       import sys
       import bin
       import numpy
-      import is-instance
+      import is_instance
       print(f"python version is: {sys.version}")
       print(f"numpy version is: {numpy.__version__}")
-      print(f"is-instance version is: {is-instance.__version__}")
-      print(f"bin version is: {bin.__version__}")
-      bin.cowsay("Oh no!")
+      print(bin.cowsay("Its working!"))
       EOF
     '';
 
@@ -79,11 +82,16 @@
     packages.${system} = packages;
 
     checks.${system} = with pythons; {
-      py314  = pkgs.runCommand "py314" { } (check-python-standard py314);
-      py315  = pkgs.runCommand "py315" { } (check-python-standard py315);
-      py313t = pkgs.runCommand "py313t" { } (check-python-freethreading py313t);
-      py314t = pkgs.runCommand "py314t" { } (check-python-freethreading py314t);
-      py315t = pkgs.runCommand "py315t" { } (check-python-freethreading py315t);
+      py313'  = pkgs.runCommand "py313"  { } (check-python-standard py313);
+      py314'  = pkgs.runCommand "py314"  { } (check-python-standard py314);
+      py315'  = pkgs.runCommand "py315"  { } (check-python-standard py315);
+
+      py313  = pkgs.runCommand "py313"  { } (check-python-common py313);
+      py314  = pkgs.runCommand "py314"  { } (check-python-common py314);
+      py315  = pkgs.runCommand "py315"  { } (check-python-common py315);
+      py313t = pkgs.runCommand "py313t" { } (check-python-common py313t);
+      py314t = pkgs.runCommand "py314t" { } (check-python-common py314t);
+      py315t = pkgs.runCommand "py315t" { } (check-python-common py315t);
     };
 
     overlays.default = overlay;
