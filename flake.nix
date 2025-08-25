@@ -22,20 +22,53 @@
     lib = pkgs.lib;
 
     all = (ps: with ps; [
+      # packaging
+      pip
+      build
+      pytest
+      setuptools
+      cython
+
+      # basics
       ipython
-      numpy
-      pandas
+      sly
+      curio
+
+      # net
       requests
+      beautifulsoup4
+
+      # numerical
+      numpy
+      editdistance
+
+      # ours
+      assure
       is-instance
       python-bin
-      editdistance
+      mmry
+      webfs
+
     ]);
 
     std = (ps: with ps; [
+      # packaging
+      twine
+
+      # net
       yt-dlp
+
+      # numerical
+      scipy
+      pandas
+      matplotlib
+      seaborn
       scikit-learn
-      lightgbm
       lambda-multiprocessing
+      lightgbm
+
+      # for sklearn
+      lz4
     ]);
 
     pythons = with pkgs; {
