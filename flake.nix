@@ -24,6 +24,7 @@
     all = (ps: with ps; [
       ipython
       numpy
+      pandas
       requests
       is-instance
       python-bin
@@ -32,7 +33,6 @@
 
     std = (ps: with ps; [
       yt-dlp
-      pandas
       scikit-learn
       lightgbm
       lambda-multiprocessing
