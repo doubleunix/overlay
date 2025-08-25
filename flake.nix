@@ -40,6 +40,7 @@
 
       # numerical
       numpy
+      sympy
       editdistance
 
       # ours
