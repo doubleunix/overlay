@@ -22,6 +22,7 @@
     lib = pkgs.lib;
 
     all = (ps: with ps; [
+
       # packaging
       pip
       build
@@ -73,7 +74,6 @@
     ]);
 
     pythons = with pkgs; {
-      py313  = python313.withPackages (ps: all ps ++ std ps ++ (with ps; [torch embd wnix geoip2 google-auth-oauthlib google-api-python-client accelerate]));
       py314  = python314.withPackages (ps: all ps ++ std ps);
       py315  = python315.withPackages (ps: all ps ++ std ps);
       py313t = python313FreeThreading.withPackages (ps: all ps);
@@ -102,12 +102,8 @@
       import pandas
       import sklearn
       import lightgbm
-      print(f"python version is: {sys.version}")
-      print(f"numpy version is: {numpy.__version__}")
-      print(f"pandas version is: {pandas.__version__}")
-      print(f"sklearn version is: {sklearn.__version__}")
-      print(f"lightgbm version is: {lightgbm.__version__}")
-      print(bin.cowsay("Its working!"))
+      import tensorflow
+      print(bin.cowsay(f"Python {sys.version} is working"))
       EOF
     '';
 
@@ -119,9 +115,7 @@
       import bin
       import numpy
       import is_instance
-      print(f"python version is: {sys.version}")
-      print(f"numpy version is: {numpy.__version__}")
-      print(bin.cowsay("Its working!"))
+      print(bin.cowsay(f"Python {sys.version} is working"))
       EOF
     '';
 
@@ -130,11 +124,8 @@
     packages.${system} = packages;
 
     checks.${system} = with pythons; {
-      py313'  = pkgs.runCommand "py313"  { } (check-python-std py313);
-      py314'  = pkgs.runCommand "py314"  { } (check-python-std py314);
-      py315'  = pkgs.runCommand "py315"  { } (check-python-std py315);
-
-      py313  = pkgs.runCommand "py313"  { } (check-python-all py313);
+      py314' = pkgs.runCommand "py314"  { } (check-python-std py314);
+      py315' = pkgs.runCommand "py315"  { } (check-python-std py315);
       py314  = pkgs.runCommand "py314"  { } (check-python-all py314);
       py315  = pkgs.runCommand "py315"  { } (check-python-all py315);
       py313t = pkgs.runCommand "py313t" { } (check-python-all py313t);

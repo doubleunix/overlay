@@ -1,7 +1,8 @@
 # overlay
 
-build: clean
+build:
 	nix build --print-build-logs
+	$(MAKE) clean
 
 check:
 	nix flake check --print-build-logs
