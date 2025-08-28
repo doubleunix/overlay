@@ -73,7 +73,24 @@
       lz4
     ]);
 
+    py313 = (ps: with ps; [
+      # numerical
+      accelerate
+      torch
+
+      # ~/bin depends
+      google-auth-oauthlib      # gmail
+      google-api-python-client  # getbtcprice
+      geoip2                    # getbtcprice
+
+      # ours
+      embd
+      kern
+      wnix
+    ]);
+
     pythons = with pkgs; {
+      py313  = python313.withPackages (ps: all ps ++ std ps ++ py313 ps);
       py314  = python314.withPackages (ps: all ps ++ std ps);
       py315  = python315.withPackages (ps: all ps ++ std ps);
       py313t = python313FreeThreading.withPackages (ps: all ps);
@@ -119,11 +136,11 @@
       EOF
     '';
 
-  in
-  {
+  in {
     packages.${system} = packages;
 
     checks.${system} = with pythons; {
+      py313' = pkgs.runCommand "py313"  { } (check-python-std py313);
       py314' = pkgs.runCommand "py314"  { } (check-python-std py314);
       py315' = pkgs.runCommand "py315"  { } (check-python-std py315);
       py314  = pkgs.runCommand "py314"  { } (check-python-all py314);
