@@ -128,27 +128,6 @@ let
 
     });
 
-    tensorflow = pyprev.tensorflow.overridePythonAttrs (old: {
-      disabled = false;
-    });
-
-    tensorflow-bin = pyprev.tensorflow-bin.overridePythonAttrs (old: {
-      version = "2.20.0";
-
-      src = prev.fetchurl {
-        url  = "https://files.pythonhosted.org/packages/43/fb/8be8547c128613d82a2b006004026d86ed0bd672e913029a98153af4ffab/tensorflow-2.20.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl";
-        hash = "sha256-0wkklfh0ny4y4lzac540v8g745b5adyzp29bi2cmmxr606dp58sz";
-      };
-
-      format = "wheel";
-
-      # If the upstream expression uses a wheel-driven meta/platform matrix,
-      # make sure we don't add CUDA runpath bits unexpectedly:
-      nativeBuildInputs = (old.nativeBuildInputs or []);
-      buildInputs       = (old.buildInputs or []);
-
-    });
-
   };
 
   freeThreadingOverrides = pyfinal: pyprev: {
@@ -160,9 +139,31 @@ let
     prev.python313.override {
       packageOverrides = pyfinal: pyprev:
         (commonOverrides pyfinal pyprev) // {
-          # put python313-specific attrset of packageOverrides here
-        };
+          # make sure we don't reference pyprev.tensorflow-bin anywhere, it's satanic
+          tensorflow-bin = pyfinal.buildPythonPackage rec {
+            pname = "tensorflow";
+            version = "2.20.0";
+            format = "wheel";
 
+            src = prev.fetchurl {
+              url  = "https://files.pythonhosted.org/packages/43/fb/8be8547c128613d82a2b006004026d86ed0bd672e913029a98153af4ffab/tensorflow-2.20.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl";
+              hash = "sha256-0wkklfh0ny4y4lzac540v8g745b5adyzp29bi2cmmxr606dp58sz";
+            };
+
+            propagatedBuildInputs = [];
+            nativeBuildInputs     = [];
+            buildInputs           = [];
+
+            pythonImportsCheck = [ "tensorflow" ];
+
+            meta = with prev.lib; {
+              description = "TensorFlow (prebuilt wheel pinned for CPython 3.13)";
+              homepage    = "https://www.tensorflow.org/";
+              license     = licenses.asl20;
+              platforms   = platforms.linux;
+            };
+          };
+        };
     };
 
   # ======================= Python 3.14 =======================
@@ -228,6 +229,8 @@ let
 in {
 
   # 3.13 exports
+  python313 = python313;
+  python313Packages = python313.pkgs;
   python313FreeThreading = python313.override {
     self = final.python313FreeThreading;
     pythonAttr = "python313FreeThreading";
