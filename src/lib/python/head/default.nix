@@ -147,7 +147,7 @@ let
 
             src = prev.fetchurl {
               url  = "https://files.pythonhosted.org/packages/43/fb/8be8547c128613d82a2b006004026d86ed0bd672e913029a98153af4ffab/tensorflow-2.20.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl";
-              hash = "sha256-0wkklfh0ny4y4lzac540v8g745b5adyzp29bi2cmmxr606dp58sz";
+              sha256 = "";
             };
 
             propagatedBuildInputs = [];
