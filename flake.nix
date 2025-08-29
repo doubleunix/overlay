@@ -77,6 +77,7 @@
       # numerical
       accelerate
       torch
+      tensorflow-bin
 
       # ~/bin depends
       google-auth-oauthlib      # gmail
@@ -119,7 +120,6 @@
       import pandas
       import sklearn
       import lightgbm
-      import tensorflow
       print(bin.cowsay(f"Python {sys.version} is working"))
       EOF
     '';

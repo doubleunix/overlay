@@ -128,8 +128,25 @@ let
 
     });
 
-    tensorflow = python-prev.tensorflow.overridePythonAttrs (old: {
+    tensorflow = pyprev.tensorflow.overridePythonAttrs (old: {
       disabled = false;
+    });
+
+    tensorflow-bin = pyprev.tensorflow-bin.overridePythonAttrs (old: {
+      version = "2.20.0";
+
+      src = prev.fetchurl {
+        url  = "https://files.pythonhosted.org/packages/43/fb/8be8547c128613d82a2b006004026d86ed0bd672e913029a98153af4ffab/tensorflow-2.20.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl";
+        hash = "sha256-0wkklfh0ny4y4lzac540v8g745b5adyzp29bi2cmmxr606dp58sz";
+      };
+
+      format = "wheel";
+
+      # If the upstream expression uses a wheel-driven meta/platform matrix,
+      # make sure we don't add CUDA runpath bits unexpectedly:
+      nativeBuildInputs = (old.nativeBuildInputs or []);
+      buildInputs       = (old.buildInputs or []);
+
     });
 
   };
