@@ -128,6 +128,10 @@ let
 
     });
 
+    tensorflow = python-prev.tensorflow.overridePythonAttrs (old: {
+      disabled = false;
+    });
+
   };
 
   freeThreadingOverrides = pyfinal: pyprev: {
