@@ -159,6 +159,9 @@ let
 
   };
 
+  # ======================= Python 3.13 =======================
+  python313 = prev.python313;
+
   # ======================= Python 3.14 =======================
   python314 =
     prev.python314.override {
@@ -222,6 +225,8 @@ let
 in {
 
   # 3.13 exports
+  python313 = python313;
+  python313Packages = python313.pkgs;
   python313FreeThreading = python313.override {
     self = final.python313FreeThreading;
     pythonAttr = "python313FreeThreading";
