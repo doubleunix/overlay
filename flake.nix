@@ -68,6 +68,7 @@
       scikit-learn
       lambda-multiprocessing
       lightgbm
+      h5py
 
       # for sklearn
       lz4
