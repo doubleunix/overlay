@@ -69,6 +69,7 @@
       lambda-multiprocessing
       lightgbm
       h5py
+      pillow
 
       # for sklearn
       lz4
