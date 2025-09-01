@@ -104,6 +104,6 @@ buildPythonPackage {
   # Keep this strict; if import fails you’ll know early.
   pythonImportsCheck = [ "tensorflow" ];
 
-  meta.platforms = [ lib.platforms.x86_64-linux ];
+  meta.platforms = [ "x86_64-linux" ];
 }
 
