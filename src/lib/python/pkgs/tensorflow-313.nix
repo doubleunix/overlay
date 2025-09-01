@@ -43,7 +43,7 @@ let
     build-system = with python.pkgs; [ setuptools ];
     src = fetchPypi {
       inherit pname version;
-      sha256 = "sha256-ZLrbxJGApeQB83P5znqx0Ytj991KnNxDySufC0gc73s=";
+      sha256 = "sha256-2MrEyYLwuVek3HOoDi6iT6sI5nnA3p3rg19KEtaaypo=";
     };
   };
 
