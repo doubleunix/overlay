@@ -92,10 +92,17 @@
       wnix
     ]);
 
+    py314 = (ps: with ps; [
+      tensorflow-src
+    ]);
+
+    py315 = (ps: with ps; [
+    ]);
+
     pythons = with pkgs; {
       py313  = python313.withPackages (ps: all ps ++ std ps ++ py313 ps);
-      py314  = python314.withPackages (ps: all ps ++ std ps);
-      py315  = python315.withPackages (ps: all ps ++ std ps);
+      py314  = python314.withPackages (ps: all ps ++ std ps ++ py314 ps);
+      py315  = python315.withPackages (ps: all ps ++ std ps ++ py315 ps);
       py313t = python313FreeThreading.withPackages (ps: all ps);
       py314t = python314FreeThreading.withPackages (ps: all ps);
       py315t = python315FreeThreading.withPackages (ps: all ps);
