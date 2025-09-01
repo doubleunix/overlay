@@ -24,7 +24,7 @@ let
     numpy
     opt-einsum
     packaging
-    protobuf_dep
+    protobuf
     setuptools
     six
     tblib
@@ -36,16 +36,16 @@ let
     wrapt
   ]);
 
-  protobuf_dep = buildPythonPackage rec {
-    pname = "protobuf";
-    version = "6.31.1";
-    pyproject = true;
-    build-system = with python.pkgs; [ setuptools ];
-    src = fetchPypi {
-      inherit pname version;
-      sha256 = "sha256-2MrEyYLwuVek3HOoDi6iT6sI5nnA3p3rg19KEtaaypo=";
-    };
-  };
+  #protobuf_dep = buildPythonPackage rec {
+  #  pname = "protobuf";
+  #  version = "6.31.1";
+  #  pyproject = true;
+  #  build-system = with python.pkgs; [ setuptools ];
+  #  src = fetchPypi {
+  #    inherit pname version;
+  #    sha256 = "sha256-2MrEyYLwuVek3HOoDi6iT6sI5nnA3p3rg19KEtaaypo=";
+  #  };
+  #};
 
 in
 
@@ -65,8 +65,7 @@ in
       cython
       perl
       requests
-      #protobuf
-      protobuf_dep
+      protobuf
       autoPatchelfHook
     ];
 
@@ -112,8 +111,7 @@ in
       numpy
       opt-einsum
       packaging
-      #(pkgs.protobuf.override { inherit protobuf; })
-      protobuf_dep
+      protobuf
       six
       tensorflow-estimator-bin
       termcolor

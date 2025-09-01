@@ -39,6 +39,17 @@ let
       };
     });
 
+    protobuf = pyprev.protobuf.overrideAttrs (old: rec {
+      pname = "protobuf";
+      version = "6.31.1";
+      pyproject = true;
+      #build-system = with python.pkgs; [ setuptools ];
+      src = pyprev.fetchPypi {
+        inherit pname version;
+        sha256 = "sha256-2MrEyYLwuVek3HOoDi6iT6sI5nnA3p3rg19KEtaaypo=";
+      };
+    });
+
     # pandas HEAD
     pandas = pyprev.pandas.overridePythonAttrs (old: rec {
       version = "2.3.2";
