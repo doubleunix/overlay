@@ -52,7 +52,9 @@ in
       pythonEnv
       cython
       perl
+      requests
       protobuf
+      ml-dtypes
       autoPatchelfHook
     ];
 
@@ -107,6 +109,14 @@ in
     ];
 
     pythonImportsCheck = [ "tensorflow" ];
+
+    # Upstream has a pip hack that results in bin/tensorboard being in both tensorflow
+    # and the propagated input tensorboard, which causes environment collisions.
+    # Another possibility would be to have tensorboard only in the buildInputs
+    # https://github.com/tensorflow/tensorflow/blob/v1.7.1/tensorflow/tools/pip_package/setup.py#L79
+    postInstall = ''
+      rm $out/bin/tensorboard
+    '';
 
     meta = with lib; {
       description = "TensorFlow wheel Python 3.13";
