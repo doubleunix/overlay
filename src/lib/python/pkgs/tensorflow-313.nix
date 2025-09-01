@@ -1,10 +1,41 @@
-{ lib
+{ pkgs
+, lib
 , fetchurl
 , buildPythonPackage
 , python
 , stdenv
 , autoPatchelfHook
 }:
+
+let
+
+  pythonEnv = python.withPackages (ps: with ps; [
+    # python deps needed during wheel build time (not runtime, see the buildPythonPackage part for that)
+    # This list can likely be shortened, but each trial takes multiple hours so won't bother for now.
+    absl-py
+    astunparse
+    dill
+    flatbuffers
+    gast
+    google-pasta
+    grpcio
+    h5py
+    numpy
+    opt-einsum
+    packaging
+    protobuf
+    setuptools
+    six
+    tblib
+    tensorboard
+    tensorflow-estimator-bin
+    termcolor
+    typing-extensions
+    wheel
+    wrapt
+  ]);
+
+in
 
   buildPythonPackage {
     pname   = "tensorflow";
@@ -16,11 +47,64 @@
       sha256 = "sha256-X6NymwEm91qZiCuJ+31TZRVyHtqAFKY+JZ54C6Cjc3I=";
     };
 
-    nativeBuildInputs = [ autoPatchelfHook ];
+    nativeBuildInputs = with pkgs; with python.pkgs; [
+      which
+      pythonEnv
+      cython
+      perl
+      protobuf
+      autoPatchelfHook
+    ];
 
-    buildInputs = [ stdenv.cc.cc ];
+    buildInputs = with pkgs; with python.pkgs; [
+      jemalloc
+      mpi
+      glibcLocales
+      git
 
-    propagatedBuildInputs = [ ];
+      # libs taken from system through the TF_SYS_LIBS mechanism
+      abseil-cpp
+      boringssl
+      curl
+      double-conversion
+      flatbuffers
+      giflib
+      grpc
+
+      # Necessary to fix the "`GLIBCXX_3.4.30' not found" error
+      (icu.override { inherit stdenv; })
+      jsoncpp
+      libjpeg_turbo
+      libpng
+      (pybind11.overridePythonAttrs (old: {
+        inherit stdenv;
+      }))
+
+      stdenv.cc.cc 
+      snappy
+      sqlite
+    ];
+
+    propagatedBuildInputs = with pkgs; with python.pkgs; [
+      absl-py
+      abseil-cpp
+      astunparse
+      flatbuffers
+      gast
+      google-pasta
+      grpcio
+      h5py
+      numpy
+      opt-einsum
+      packaging
+      #(pkgs.protobuf.override { inherit protobuf; })
+      protobuf
+      six
+      tensorflow-estimator-bin
+      termcolor
+      typing-extensions
+      wrapt
+    ];
 
     pythonImportsCheck = [ "tensorflow" ];
 
