@@ -77,7 +77,7 @@ let
       requiredSystemFeatures = [ "big-parallel" ];
     };
 
-    meta.platforms = [ lib.platforms.x86_64-linux ];
+    meta.platforms = [ "x86_64-linux" ];
   };
 in
 
