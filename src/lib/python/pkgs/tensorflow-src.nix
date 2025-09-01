@@ -1,6 +1,6 @@
 { lib
 , stdenv
-, fetchgit
+, fetchFromGitHub
 , buildBazelPackage
 , buildPythonPackage
 , python            # <-- pass your CPython HEAD / 3.15-alpha here
@@ -18,10 +18,12 @@
 assert stdenv.hostPlatform.system == "x86_64-linux";
 
 let
-  # Impure HEAD fetch. Build with `--impure` or pin a commit and replace this.
-  src = fetchgit {
-    url = "https://github.com/tensorflow/tensorflow.git";
-    ref = "master";
+
+  fetchFromGitHub {
+    owner = "tensorflow";
+    repo = "tensorflow";
+    rev = "0cf856b84852256751dc8b21debacf847a97e432";
+    hash = "sha256-NwClel4DO85NTQiJYC2bPDYifygJ/8F9iC0HS6pPE/0=";
     shallow = true;
   };
 
