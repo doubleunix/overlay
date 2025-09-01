@@ -93,7 +93,7 @@
     ]);
 
     py314 = (ps: with ps; [
-      tensorflow-src
+      #tensorflow-src   # Resume later by uncommenting this
     ]);
 
     py315 = (ps: with ps; [
