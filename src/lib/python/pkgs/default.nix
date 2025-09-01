@@ -23,6 +23,7 @@ final: prev:
         python-cowsay           = pyfinal.callPackage ./python-cowsay.nix { };
         tflite-runtime          = pyfinal.callPackage ./tflite-runtime.nix { };
         lambda-multiprocessing  = pyfinal.callPackage ./lambda-multiprocessing.nix { };
+        protobuf                = pyfinal.callPackage ./protobuf.nix { };
         tensorflow-313          = pyfinal.callPackage ./tensorflow-313.nix { };
         tensorflow-src          = pyfinal.callPackage ./tensorflow-src.nix { };
       }
