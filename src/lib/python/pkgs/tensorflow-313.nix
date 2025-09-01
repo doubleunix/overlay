@@ -1,6 +1,7 @@
 { pkgs
 , lib
 , fetchurl
+, fetchPypi
 , buildPythonPackage
 , python
 , stdenv
@@ -35,6 +36,17 @@ let
     wrapt
   ]);
 
+  protobuf_528 = buildPythonPackage rec {
+    pname = "protobuf";
+    version = "5.28.3";
+    pyproject = true;
+    build-system = with python.pkgs; [ setuptools ];
+    src = fetchPypi {
+      inherit pname version;
+      sha256 = "sha256-ZLrbxJGApeQB83P5znqx0Ytj991KnNxDySufC0gc73s=";
+    };
+  };
+
 in
 
   buildPythonPackage {
@@ -53,7 +65,8 @@ in
       cython
       perl
       requests
-      protobuf
+      #protobuf
+      protobuf_528
       autoPatchelfHook
     ];
 
@@ -115,7 +128,7 @@ in
     # Another possibility would be to have tensorboard only in the buildInputs
     # https://github.com/tensorflow/tensorflow/blob/v1.7.1/tensorflow/tools/pip_package/setup.py#L79
     postInstall = ''
-      rm $out/bin/tensorboard
+      rm -f $out/bin/tensorboard
     '';
 
     meta = with lib; {
