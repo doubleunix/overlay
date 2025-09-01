@@ -54,7 +54,6 @@ in
       perl
       requests
       protobuf
-      ml-dtypes
       autoPatchelfHook
     ];
 
@@ -96,6 +95,7 @@ in
       google-pasta
       grpcio
       h5py
+      ml-dtypes
       numpy
       opt-einsum
       packaging
