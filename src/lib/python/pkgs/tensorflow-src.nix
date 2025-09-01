@@ -19,7 +19,7 @@ assert stdenv.hostPlatform.system == "x86_64-linux";
 
 let
 
-  fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "tensorflow";
     repo = "tensorflow";
     rev = "0cf856b84852256751dc8b21debacf847a97e432";
