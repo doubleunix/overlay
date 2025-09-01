@@ -145,11 +145,6 @@ let
 
     });
 
-    tensorflow-src = pyfinal.callPackage ../pkgs/tensorflow-src.nix {
-      python = pyfinal;
-      bazel = prev.bazel_7;
-    };
-
   };
 
   freeThreadingOverrides = pyfinal: pyprev: {
@@ -166,6 +161,10 @@ let
   python314 = prev.python314.override {
     packageOverrides = pyfinal: pyprev:
         (commonOverrides pyfinal pyprev) // {
+          tensorflow-src = pyfinal.callPackage ../pkgs/tensorflow-src.nix {
+            python = final.python314;
+            bazel = prev.bazel;
+          };
         };
       };
 
@@ -214,7 +213,10 @@ let
     (python315'.override {
       packageOverrides = pyfinal: pyprev:
         (commonOverrides pyfinal pyprev) // {
-          # put python315-specific attrset of packageOverrides here
+          tensorflow-src = pyfinal.callPackage ../pkgs/tensorflow-src.nix {
+            python = final.python315;
+            bazel = prev.bazel;
+          };
         };
     });
 
