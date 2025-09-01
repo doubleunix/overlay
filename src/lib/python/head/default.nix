@@ -147,7 +147,7 @@ let
 
     tensorflow-src = pyfinal.callPackage ../pkgs/tensorflow-src.nix {
       python = pyfinal;
-      bazel = pkgs.bazel_7;
+      bazel = prev.bazel_7;
     };
 
   };
