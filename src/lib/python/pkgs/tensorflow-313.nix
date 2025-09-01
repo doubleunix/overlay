@@ -36,9 +36,9 @@ let
     wrapt
   ]);
 
-  protobuf_528 = buildPythonPackage rec {
+  protobuf_dep = buildPythonPackage rec {
     pname = "protobuf";
-    version = "5.28.3";
+    version = "6.31.1";
     pyproject = true;
     build-system = with python.pkgs; [ setuptools ];
     src = fetchPypi {
@@ -66,7 +66,7 @@ in
       perl
       requests
       #protobuf
-      protobuf_528
+      protobuf_dep
       autoPatchelfHook
     ];
 
