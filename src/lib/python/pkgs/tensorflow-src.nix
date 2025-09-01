@@ -24,7 +24,6 @@ let
     repo = "tensorflow";
     rev = "0cf856b84852256751dc8b21debacf847a97e432";
     hash = "sha256-NwClel4DO85NTQiJYC2bPDYifygJ/8F9iC0HS6pPE/0=";
-    shallow = true;
   };
 
   # minimal py deps to let configure + wheel build run
