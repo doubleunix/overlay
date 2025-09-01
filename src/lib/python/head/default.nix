@@ -4,6 +4,23 @@ let
 
   commonOverrides = pyfinal: pyprev: {
 
+    # --- Make TF-HEAD the default tensorflow for this Python set ---
+    tensorflow = pyfinal.callPackage ../pkgs/tensorflow.nix {
+      # Tie the TF build to the *current* Python set:
+      python            = pyfinal;
+      # Bazel that works with TF HEAD; bazel_7 is typically the sweet spot:
+      bazel             = prev.bazel_7 or prev.bazel;
+      which             = prev.which;
+      # Pull Python deps from the same interpreter set to avoid ABI/closure mismatches
+      setuptools        = pyfinal.pkgs.setuptools;
+      wheel             = pyfinal.pkgs.wheel;
+      packaging         = pyfinal.pkgs.packaging;
+      absl-py           = pyfinal.pkgs.absl-py;
+      numpy             = pyfinal.pkgs.numpy;
+      protobuf          = pyfinal.pkgs.protobuf;
+      typing-extensions = pyfinal.pkgs.typing-extensions or null;
+    };
+
     buildPythonPackage = args:
       pyprev.buildPythonPackage (args // { doCheck = false; doInstallCheck = false; });
 
