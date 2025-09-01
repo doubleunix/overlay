@@ -24,7 +24,7 @@ let
     numpy
     opt-einsum
     packaging
-    protobuf
+    protobuf_dep
     setuptools
     six
     tblib
@@ -113,7 +113,7 @@ in
       opt-einsum
       packaging
       #(pkgs.protobuf.override { inherit protobuf; })
-      protobuf
+      protobuf_dep
       six
       tensorflow-estimator-bin
       termcolor
