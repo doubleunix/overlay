@@ -7,7 +7,7 @@ final: prev:
 
   weatherspect = prev.callPackage ./weatherspect.nix { };
 
-  kdenlive = (prev.kdenlive.overrideAttrs (prev: {
+  kdePackages.kdenlive = (prev.kdePackages.kdenlive.overrideAttrs (prev: {
     nativeBuildInputs = (prev.nativeBuildInputs or []) ++ [ prev.makeBinaryWrapper ];
     postInstall = (prev.postInstall or "") + ''
       wrapProgram $out/bin/kdenlive \
