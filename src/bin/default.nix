@@ -7,12 +7,12 @@ final: prev:
 
   weatherspect = prev.callPackage ./weatherspect.nix { };
 
-  kdePackages.kdenlive = (prev.kdePackages.kdenlive.overrideAttrs (prev: {
-    nativeBuildInputs = (prev.nativeBuildInputs or []) ++ [ prev.makeBinaryWrapper ];
-    postInstall = (prev.postInstall or "") + ''
+  kdePackages.kdenlive = prev.kdePackages.kdenlive.overrideAttrs (old: {
+    nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ final.makeWrapper ];
+    postInstall = (old.postInstall or "") + ''
       wrapProgram $out/bin/kdenlive \
-        --prefix LADSPA_PATH : ${prev.rnnoise-plugin}/lib/ladspa
+        --prefix LADSPA_PATH : ${final.rnnoise-plugin}/lib/ladspa
     '';
-  }));
+  });
 
 }
