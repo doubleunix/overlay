@@ -79,7 +79,7 @@
       # numerical
       accelerate
       torch
-      tensorflow-313
+      #tensorflow-313
 
       # ~/bin depends
       google-auth-oauthlib      # gmail
