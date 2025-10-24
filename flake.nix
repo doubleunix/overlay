@@ -88,8 +88,8 @@
 
       # ours
       embd
-      kern
-      wnix
+      #kern
+      #wnix
     ]);
 
     py314 = (ps: with ps; [
