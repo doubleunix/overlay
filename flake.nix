@@ -73,6 +73,8 @@
 
       # ~/bin depends
       google-auth-oauthlib      # gmail
+      google-api-python-client  # gmail, getbtcprice
+      geoip2                    # getbtcprice
 
       # for sklearn
       lz4
@@ -82,11 +84,6 @@
       # numerical
       accelerate
       torch
-      #tensorflow-313
-
-      # ~/bin depends
-      google-api-python-client  # getbtcprice
-      geoip2                    # getbtcprice
 
       # ours
       embd
