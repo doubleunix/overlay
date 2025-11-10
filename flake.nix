@@ -83,6 +83,7 @@
 
       # ~/bin depends
       google-auth-oauthlib      # gmail
+      google-auth-httplib2      # gmail?
       google-api-python-client  # getbtcprice
       geoip2                    # getbtcprice
 
