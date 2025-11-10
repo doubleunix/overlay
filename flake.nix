@@ -118,7 +118,8 @@
     overlayNames = builtins.attrNames (import ./src {} pkgs);
     attrset      = pkgs.__splicedPackages;
     derivations  = lib.filterAttrs (k: v: lib.elem k overlayNames && lib.isDerivation v) attrset;
-    packages     = derivations // pythons // { inherit default; overlay = default; };
+    #packages     = derivations // pythons // { inherit default; overlay = default; };
+    packages     = pythons // derivations // { inherit default; overlay = default; };
 
     check-python-std = pyenv: ''
       set -euo pipefail
