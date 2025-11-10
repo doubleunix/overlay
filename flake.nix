@@ -103,7 +103,7 @@
     pythons = with pkgs; {
       py311  = python311.withPackages (ps: with ps; [ pip ]);
       py312  = python312.withPackages (ps: with ps; [ pip ]);
-      py313  = (python313.withPackages (ps: all ps ++ std ps ++ py313 ps));
+      py313  = python313.withPackages (ps: all ps ++ std ps ++ py313 ps);
       py314  = python314.withPackages (ps: all ps ++ std ps ++ py314 ps);
       py315  = python315.withPackages (ps: all ps ++ std ps ++ py315 ps);
       py313t = python313FreeThreading.withPackages (ps: all ps);
