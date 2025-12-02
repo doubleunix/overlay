@@ -84,6 +84,7 @@
       # numerical
       accelerate
       torch
+      numba
 
       # ours
       embd
