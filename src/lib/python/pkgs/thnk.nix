@@ -4,11 +4,10 @@
 , fetchFromGitHub
 , setuptools
 , pytest
-, pandas
-, sentence-transformers
+, jax
+, nltk
+, timestring
 , is-instance
-, assure
-, mmry
 , ...
 } @ inputs:
 
