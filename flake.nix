@@ -88,6 +88,7 @@
 
       # ours
       embd
+      thnk
       #kern
       #wnix
     ]);
