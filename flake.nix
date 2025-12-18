@@ -88,7 +88,7 @@
 
       # ours
       embd
-      #thnk   # need to port timestring or remove dependency
+      thnk   # need to port timestring or remove dependency
       #kern
       #wnix
     ]);
