@@ -19,8 +19,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "notarealdeveloper";
     repo = "think";
-    tag = version;
-    hash = "";
+    rev = "5795710750432b5647fd210f55b75433de96d1c5";
+    hash = "sha256-PHzxz2lEh280AcDUjm/fMLMLh58ZYpxltWbApW0yP28=";
   };
 
   build-system = [ setuptools ];
