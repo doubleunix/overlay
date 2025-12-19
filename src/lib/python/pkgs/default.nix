@@ -15,8 +15,8 @@ final: prev:
         embd                    = pyfinal.callPackage ./embd.nix { inherit (pyfinal) is-instance assure mmry; };
         kern                    = pyfinal.callPackage ./kern.nix { inherit (pyfinal) assure mmry; };
         wnix                    = pyfinal.callPackage ./wnix.nix { inherit (pyfinal) is-instance assure mmry embd kern; };
-        timestring              = pyfinal.callPackage ./timestring.nix { };
-        thnk                    = pyfinal.callPackage ./thnk.nix { inherit (pyfinal) is-instance jax timestring nltk; };
+        tmstr                   = pyfinal.callPackage ./tmstr.nix { };
+        thnk                    = pyfinal.callPackage ./thnk.nix { inherit (pyfinal) is-instance jax tmstr; };
         webfs                   = pyfinal.callPackage ./webfs.nix { inherit (pyfinal) mmry; };
         python-bin              = pyfinal.callPackage ./python-bin.nix { };
 
