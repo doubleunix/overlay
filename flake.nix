@@ -26,7 +26,7 @@
       # packaging
       pip
       build
-      pytest
+      #pytest
       setuptools
       cython
 
