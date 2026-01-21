@@ -21,8 +21,23 @@ let
       typing-extensions = pyfinal.pkgs.typing-extensions or null;
     };
 
+    #buildPythonPackage = args:
+    #  pyprev.buildPythonPackage (args // { doCheck = false; doInstallCheck = false; });
+
     buildPythonPackage = args:
-      pyprev.buildPythonPackage (args // { doCheck = false; doInstallCheck = false; });
+      if lib.isFunction args then
+        # New-style: buildPythonPackage (finalAttrs: { ... })
+        pyprev.buildPythonPackage (finalAttrs:
+          (args finalAttrs) // {
+            doCheck = false;
+            doInstallCheck = false;
+          })
+      else
+        # Old-style: buildPythonPackage { ... }
+        pyprev.buildPythonPackage (args // {
+          doCheck = false;
+          doInstallCheck = false;
+        });
 
     buildPythonApplication = args:
       pyprev.buildPythonApplication (args // { doCheck = false; doInstallCheck = false; });
