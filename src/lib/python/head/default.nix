@@ -21,26 +21,26 @@ let
       typing-extensions = pyfinal.pkgs.typing-extensions or null;
     };
 
+
+    buildPythonPackage = args:
+      if prev.lib.isFunction args then
+        pyprev.buildPythonPackage (finalAttrs:
+          (args finalAttrs) // { doCheck = false; doInstallCheck = false; })
+      else
+        pyprev.buildPythonPackage (args // { doCheck = false; doInstallCheck = false; });
+
+    buildPythonApplication = args:
+      if prev.lib.isFunction args then
+        pyprev.buildPythonApplication (finalAttrs:
+          (args finalAttrs) // { doCheck = false; doInstallCheck = false; })
+      else
+        pyprev.buildPythonApplication (args // { doCheck = false; doInstallCheck = false; });
+
     #buildPythonPackage = args:
     #  pyprev.buildPythonPackage (args // { doCheck = false; doInstallCheck = false; });
 
-    buildPythonPackage = args:
-      if lib.isFunction args then
-        # New-style: buildPythonPackage (finalAttrs: { ... })
-        pyprev.buildPythonPackage (finalAttrs:
-          (args finalAttrs) // {
-            doCheck = false;
-            doInstallCheck = false;
-          })
-      else
-        # Old-style: buildPythonPackage { ... }
-        pyprev.buildPythonPackage (args // {
-          doCheck = false;
-          doInstallCheck = false;
-        });
-
-    buildPythonApplication = args:
-      pyprev.buildPythonApplication (args // { doCheck = false; doInstallCheck = false; });
+    #buildPythonApplication = args:
+    #  pyprev.buildPythonApplication (args // { doCheck = false; doInstallCheck = false; });
 
     # cython (almost) HEAD: this fixes a lot of problems
     cython = pyprev.cython.overrideAttrs (old: rec {
