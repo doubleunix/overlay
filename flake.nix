@@ -64,6 +64,8 @@
       scipy
       pandas
       matplotlib
+      pyqt6
+
       seaborn
       scikit-learn
       lambda-multiprocessing
