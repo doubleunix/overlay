@@ -64,6 +64,7 @@
       scipy
       pandas
       matplotlib
+      pycairo
       pyqt6
 
       seaborn
