@@ -39,7 +39,7 @@
       requests
       beautifulsoup4
       selenium
-      webdriver_manager
+      webdriver-manager
 
       # numerical
       numpy
