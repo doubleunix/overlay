@@ -38,6 +38,8 @@
       # net
       requests
       beautifulsoup4
+      selenium
+      webdriver_manager
 
       # numerical
       numpy
