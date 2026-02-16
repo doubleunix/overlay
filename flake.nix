@@ -31,7 +31,7 @@
       cython
 
       # basics
-      ipython
+      #ipython
       sly
       curio
 
