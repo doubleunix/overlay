@@ -105,7 +105,7 @@
     ]);
 
     pythons = with pkgs; {
-      py311  = python311.withPackages (ps: with ps; [ pip ]);
+      #py311  = python311.withPackages (ps: with ps; [ pip ]);
       py312  = python312.withPackages (ps: with ps; [ pip ]);
       py313  = python313.withPackages (ps: all ps ++ std ps ++ py313 ps);
       py314  = python314.withPackages (ps: all ps ++ std ps ++ py314 ps);
