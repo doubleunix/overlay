@@ -71,7 +71,7 @@
       seaborn
       scikit-learn
       lambda-multiprocessing
-      lightgbm
+      #lightgbm
       h5py
       pillow
 
